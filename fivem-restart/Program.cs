@@ -6,7 +6,7 @@ using System.IO;
 namespace fivem_restart
 {
     /*
-    TinyNvidiaUpdateChecker - Check for NVIDIA GPU driver updates!
+    fivem-restart - Auto restart script for FiveM
     Copyright (C) 2018 SCRP team
 
     This program Is free software: you can redistribute it And/Or modify
@@ -27,15 +27,17 @@ namespace fivem_restart
     {
         public static string currentPath = Directory.GetCurrentDirectory();
         public static string logFile = "CitizenFX.log";
+        public static string fxserverName = "FXServer.exe";
 
         static void Main(string[] args)
         {
             Console.Title = "FiveM server";
             Console.WriteLine("fivem-restart v1.0.0");
 
-            if (!File.Exists("FXServer.exe")) {
+            if (!File.Exists(fxserverName)) {
                 Console.WriteLine("FXServer was not found, we cannot run the program! Press any key to exit the program.");
                 Console.ReadKey();
+                Environment.Exit(1);
             }
 
             CheckGit();
@@ -51,7 +53,7 @@ namespace fivem_restart
         private static void LaunchServer()
         {
             Console.WriteLine("fivem-restart: starting fxserver . . .");
-            LaunchProcess("FXServer.exe", @"+set citizen_dir " + currentPath + @"\citizen\ +exec server.cfg");
+            LaunchProcess(fxserverName, @"+set citizen_dir " + currentPath + @"\citizen\ +exec server.cfg");
         }
 
         private static void CheckGit()
